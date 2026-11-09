@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tonal EQ</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="top">
+        <div class="brand">
+          <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+            <defs>
+              <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#22d3ee" />
+                <stop offset="1" stop-color="#a78bfa" />
+              </linearGradient>
+            </defs>
+            <rect x="1" y="1" width="30" height="30" rx="8" fill="url(#lg)" />
+            <path d="M5 21 C 10 21, 11 9, 16 9 S 22 19, 27 15" fill="none" stroke="#0a0c10" stroke-width="2.6" stroke-linecap="round" />
+            <circle cx="16" cy="9" r="2.4" fill="#0a0c10" />
+          </svg>
+          <div>
+            <div class="name">Tonal EQ</div>
+            <div class="sub" id="tabStatus" data-i18n="loading"></div>
+          </div>
+        </div>
+
+        <div class="master" data-i18n-title="volumeTitle">
+          <span class="label" data-i18n="volume"></span>
+          <input type="range" id="master" min="-30" max="20" step="0.1" value="0" />
+          <output id="masterOut">0.0 dB</output>
+        </div>
+
+        <button id="power" class="power" disabled>
+          <span class="dot"></span><span class="txt" data-i18n="enableTab"></span>
+        </button>
+      </header>
+
+      <section class="graph-wrap">
+        <canvas id="graph" tabindex="0" data-i18n-label="graphLabel"></canvas>
+        <div class="graph-tools">
+          <button id="rangeBtn" class="chip-btn" data-i18n-title="rangeTitle">±30 dB</button>
+          <button id="resetAll" class="chip-btn" data-i18n="resetEq" data-i18n-title="resetEqTitle"></button>
+        </div>
+        <div class="tooltip" id="tooltip" hidden></div>
+      </section>
+
+      <section class="inspector" id="inspector"></section>
+
+      <nav class="tabs" role="tablist">
+        <button class="tab active" data-panel="presets" role="tab" data-i18n="tabPresets"></button>
+        <button class="tab" data-panel="effects" role="tab" data-i18n="tabEffects"></button>
+        <button class="tab" data-panel="tabs" role="tab"><span data-i18n="tabTabs"></span> <span class="count" id="tabCount">0</span></button>
+      </nav>
+
+      <section class="panel active" id="panel-presets">
+        <div class="preset-grid" id="builtinGrid"></div>
+        <div class="user-row">
+          <div class="user-head">
+            <span class="section-title" data-i18n="myPresets"></span>
+            <div class="save-box">
+              <input id="presetName" type="text" maxlength="40" data-i18n-placeholder="presetPlaceholder" />
+              <button id="savePreset" class="btn primary" data-i18n="save"></button>
+              <button id="importBtn" class="btn" data-i18n="import"></button>
+              <button id="exportBtn" class="btn" data-i18n="export"></button>
+              <input id="importFile" type="file" accept="application/json,.json" hidden />
+            </div>
+          </div>
+          <div class="user-list" id="userList"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-effects">
+        <div class="fx-grid">
+          <div class="fx-card">
+            <div class="fx-head">
+              <span class="section-title" data-i18n="stereo"></span>
+              <button class="mini-reset" data-reset="stereo" data-i18n="reset" data-i18n-title="resetTitle"></button>
+            </div>
+            <div class="segmented" id="stereoSeg">
+              <button data-mode="normal" data-i18n="stereo_normal"></button>
+              <button data-mode="karaoke" data-i18n="stereo_karaoke"></button>
+              <button data-mode="center" data-i18n="stereo_center"></button>
+            </div>
+            <p class="hint" id="stereoHint"></p>
+          </div>
+          <div class="fx-card">
+            <div class="fx-head">
+              <span class="section-title" data-i18n="distortion"></span>
+              <div class="fx-actions">
+                <button class="mini-reset" data-reset="distortion" data-i18n="reset" data-i18n-title="resetTitle"></button>
+                <label class="switch"><input type="checkbox" id="distOn" /><span></span></label>
+              </div>
+            </div>
+            <div id="distControls" class="stack"></div>
+          </div>
+          <div class="fx-card wide">
+            <div class="fx-head">
+              <span class="section-title" data-i18n="reverb"></span>
+              <div class="fx-actions">
+                <button class="mini-reset" data-reset="reverb" data-i18n="reset" data-i18n-title="resetTitle"></button>
+                <label class="switch"><input type="checkbox" id="revOn" /><span></span></label>
+              </div>
+            </div>
+            <div id="revControls" class="two-col"></div>
+          </div>
+          <div class="fx-card">
+            <div class="fx-head">
+              <span class="section-title" data-i18n="limiter"></span>
+              <label class="switch"><input type="checkbox" id="limOn" /><span></span></label>
+            </div>
+            <p class="hint" data-i18n="limiterHint"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-tabs">
+        <div class="tab-list" id="tabList"></div>
+      </section>
+
+      <div class="toast" id="toast" role="status"></div>
+    </div>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

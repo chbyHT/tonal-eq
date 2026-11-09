@@ -1,0 +1,4 @@
+{
+  "extName": { "message": "Tonal EQ" },
+  "extDescription": { "message": "Per-tab audio equalizer: 11-band parametric EQ, live spectrum, and effect presets (bass boost, reverb, vocal removal…)." }
+}
